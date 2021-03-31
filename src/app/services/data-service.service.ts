@@ -130,7 +130,7 @@ this.globalDataUrl=`${this.baseUrl}${this.formatDateMonth(this.month)}-${this.fo
    })
   //  let con = cols[1];
  })    
- console.log(mainData);
+//  console.log(mainData);
   
       return mainData;
     }))
