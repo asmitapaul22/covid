@@ -10,6 +10,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { DashboardCardComponent } from './component/dashboard-card/dashboard-card.component';
 import { VaccinationComponent } from './component/vaccination/vaccination.component';
+
 @NgModule({
   declarations: [
     AppComponent,

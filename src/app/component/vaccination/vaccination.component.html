@@ -1,57 +1,76 @@
     <!-- <div class="ui inverted dimmer"[class.active]='loading'>
         <div class="ui text loader">Loading</div> 
     
-    </div>-->
-    <!-- <div class="jumbotron bg-white text-center">
+    </div> -->
+    <div class="jumbotron bg-white text-center">
         <h1 class="display-4">Corona COVID-19 Vaccination Tracker coutry wise</h1>
         <hr>
     <div class="mx-auto">
       <div class="form-group col-lg-5 mx-auto">
         <label for="c">Select Country</label>
         <select name="" class="form-control" id="c" #input (change)="updateValues(input.value)">
-            <option value="" selected hidden>Afghanistan</option>
-            <option value="{{con}}" *ngFor="let con of countries">{{con}}</option>
+          <!--  -->
+            <option value="" selected hidden>India</option>
+            <option value="{{con}}" *ngFor="let con of finalcountries">{{con}}</option>
         </select>
       </div>
-    </div> -->
+    </div>
     <!-- <app-dashboard-card [totalConfirmed]='totalConfirmed'
         [totalActive]='totalActive'
         [totalRecovered]='totalRecovered'
-        [totalDeaths]='totalDeaths'></app-dashboard-card> -->
-        <!-- <div class="row" > -->
-          <!-- <div class=""> -->
-            <!-- <div class="col"> -->
-              <!-- <google-chart [type]="chart.LineChart" [height]="chart.height" style="width: 100%;" [options]="chart.options" [data]='datatable'></google-chart> -->
-            <!-- </div>
-            <table class="table col">
+        [totalDeaths]='totalDeaths'></app-dashboard-card>  -->
+       <div class="row" >
+          <!-- <div class="">
+            <div class="">
+               <google-chart [type]="chart.LineChart" [height]="chart.height" style="width: 100%;" [options]="chart.options" [data]='datatable'></google-chart> -->
+        <!-- </div> -->
+              <table class="table">
               <thead>
                 <tr>
                   <th>S no.</th>
                   <th>Date</th>
-                  <th>Vaccine</th>
                   <th>Total Vaccination</th>
                   <th>People Vaccinated</th>
+                  <!-- <th>Vaccine</th> -->
+                  <th>Daily Vaccinations Raw</th>
+                  <th>Daily Vaccinations</th>
+                  <!-- <th>People Vaccinated</th> -->
                   <th>People Fully Vaccinated</th>
                 </tr>
-              </thead> -->
-      
-              <!-- <tbody>
-                <tr *ngFor='let cs of selectedCountryData; index as i '>
+                <tr *ngFor="let total of total_vaccinations;index as i;">
                   <td>{{i+1}}</td>
+                  <td>{{dates[i] | date}}</td>
+                  <td>{{total}}</td>
+                  <td>{{people_vaccinated[i]}}</td>
+                  <td>{{people_fully_vaccinated[i]}}</td>
+                  <td>{{daily_vaccinations_raw[i]}}</td>
+                  <td>{{daily_vaccinations[i]}}</td>
+
+                  <!-- <td>{{ppl}}</td> -->
+                </tr>
+              </thead> 
+      
+              <tbody>
+                <tr >
+                  <!-- *ngFor='let cs of selectedCountryData; index as i ' -->
+                  <!-- <td>{{i+1}}</td>
                   <td>{{cs.date | date}}</td>
-                  <td>{{cs.cases}}</td>
+                  <td>{{cs.cases}}</td> -->
                 </tr>
               </tbody>
-            </table> -->
-          <!-- </div> -->
+            </table> 
+          </div>
       
           <!-- <div class="col">
             <canvas baseChart width="400" height="200" [datasets]="lineChartData" [labels]="lineChartLabels"
               [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType">
             </canvas>
           </div> -->
-        <!-- </div>
-      </div> -->
+        </div>
       <!-- </div> -->
+      <!-- </div> -->
+      <!-- <div class="row">
+        <google-chart [type]="chart.LineChart" [height]="chart.height" style="width: 100%;" [options]="chart.options" [data]='datatable'></google-chart>
+      </div> -->
     
     

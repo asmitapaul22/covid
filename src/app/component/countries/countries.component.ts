@@ -56,7 +56,6 @@ this.updateValues('Bahamas');
     })
     // this.selectedCountryData=this.dateWiseData["Afghanistan"]
     // console.log("data of af",this.selectedCountryData);
-   
   }
   updateChart(con: string,datacon : DateWiseDataModel[])
   {
@@ -92,6 +91,8 @@ console.log(cs.cases,cs.date)
   }
 updateValues(country : string)
 {
+  this.loading = false;
+ 
   this.data?.forEach(cs=>{
     if(cs.country == country)
     {
@@ -105,7 +106,7 @@ updateValues(country : string)
   this.selectedCountryData=this.dateWiseData[country]
       this.updateChart(country,this.selectedCountryData);
   console.log(country);
-  this.loading = false;
+  
  
 // console.log(this.selectedCountryData);
 //  this.loading = false;

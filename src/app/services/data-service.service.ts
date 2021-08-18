@@ -15,8 +15,7 @@ private globalDataUrl='';
 //WORKING URL https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-10-2020.csv
 private dateWiseDataUrl="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 private extention = '.csv';  
-private baseVaccineDataUrl ="https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv";
-private vaccineDataUrl="";
+private vaccineDataUrl ="https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv";
 month;
 date;
 year;
@@ -92,6 +91,26 @@ this.globalDataUrl=`${this.baseUrl}${this.formatDateMonth(this.month)}-${this.fo
              if(error.status==404)
              {
                this.date=this.date-1;
+               if(this.date==0)
+               {
+                 if(this.month==1||this.month==3||this.month==5||this.month==7||this.month==8||this.month==10||this.month==12)
+                 {
+                  this.date=31;
+                 }
+                 if(this.month==4||this.month==6||this.month==9||this.month==11)
+                 {
+                  this.date=30;
+                 }
+                 if(this.month==2)
+                 {
+                  if (((this.year % 4 == 0) && (this.year % 100!= 0)) || (this.year%400 == 0))
+                  this.date=29;
+               else
+                  this.date=28;
+                 }
+                 
+                 this.month=this.month-1;
+               }
                this.globalDataUrl=`${this.baseUrl}${this.formatDateMonth(this.month)}-${this.formatDateMonth(this.date)}-${this.year}${this.extention}`;
               //  console.log(this.globalDataUrl);
                return this.getGlobalData();
@@ -185,4 +204,17 @@ this.globalDataUrl=`${this.baseUrl}${this.formatDateMonth(this.month)}-${this.fo
 //   // })
 // )
 //   }
+
+
+
+getVaccineData()
+{
+return this.http.get(this.vaccineDataUrl,{responseType: 'text'}).pipe(
+  map(result=>{
+    // console.log("ressult",result);
+    return result;
+  })
+)
+
+}
 }

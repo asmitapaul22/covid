@@ -9,69 +9,181 @@ import { DataServiceService } from 'src/app/services/data-service.service';
   styleUrls: ['./vaccination.component.css']
 })
 export class VaccinationComponent implements OnInit {
-// data :VaccineDataSummary[];
-// private country;
-// selectedCountryData: VaccineDataSummary[];
-// dateWiseData;
-// dates;
-// total_vaccinations=0;
-// people_vaccinated=0;
-// people_fully_vaccinated=0;
-// daily_vaccinations_raw=0;
-// daily_vaccinations=0;
-// // data: GlobalDataSummary[];
-// countries: string[]=[];
-// constructor(private dataservice : DataServiceService) { }
+// data:VaccineDataSummary[];
+demo:string;
+columndata: string[]=[];
+finalcountries:string[]=[];
+// rendatadates:string[]=[];
+// rendatacon:string[]=[];
+// rendatadppl:string[]=[];
+// dates:string[]=[];
+// total_vac:string[]=[];
+// ppl_vac:string[]=[];
+finaldata:string[]=[];
+data;
+total_vaccinations:string[]=[];
+people_vaccinated:string[]=[];
+people_fully_vaccinated:string[]=[];
+daily_vaccinations_raw:string[]=[];
+daily_vaccinations:string[]=[];
+dates:string[]=[];
+// twoppl:string[]=[];
+countries: string[]=[];
+datatable= [];
+chart={
+  LineChart :"LineChart",
+   // ColumnChart:"ColumnChart",
+   height : 500,
+   // width :600,
+   options: {
+     
+     animation:{
+       duration:1000,
+       easing:'out',
+      
+     },
+     // is3D: true
+   }
+ }
+constructor(private dataservice : DataServiceService) { }
 
   ngOnInit(): void {
-//     this.dataservice.getvaccineData().subscribe(result=>{
-//       console.log("RESULT",result);
-//      this.data=result;
-//      console.log("data",this.data);
-//      this.data.forEach(cs=>{
-//        this.countries.push(cs.country);
-       
-//      })
-//      console.log("countries",this.countries);
+    this.dataservice.getVaccineData().subscribe(result=>{
+      this.demo=result;
+      // console.log("resulttttt",this.demo);
 
-//       // this.data=result;
-//       // this.vaccineData.forEach(cs => {
-        
-//       // });
-//       // console.log("vaccination",this.vaccineData);
-//     })
-//     // this.dataservice.getGlobalData().subscribe(result=>{
-//     //   this.data=result;
-//     //   // console.log("eeeeeeeeeeeeeeeeeeeeee",this.data);
+      var lines=this.demo.split("\n");
+      // lines.splice(0,1);
+      // lines.pop();
+      // lines.shift();
+      var re=[];
+      var headers=lines[0].split(",");
+      for(var i=1;i<lines.length;i++){
+
+        var obj = {};
+        var currentline=lines[i].split(",");
+  // console.log("current lines",currentline);
+  
+        for(var j=0;j<headers.length;j++){
+            obj[headers[j]] = currentline[j];
+            // console.log(obj);
+            
+        }
+  
+        re.push(obj);
       
-//     //   this.data.forEach(cs=>{
-//     //     // console.log("country",cs.country);
-//     //   this.countries.push(cs.country);
-//     //   this.updateValues('Afghanistan');
-//     //   })
-//     //       })
-//   }
-//   updateValues(country : string)
-// {
-//   this.data?.forEach(cs=>{
-//     if(cs.country == country)
-//     {
-//     //   this.dates =cs.dates,
-//     // this.total_vaccinations=cs.total_vaccinations,
-//     // this.people_vaccinated=cs.people_vaccinated,
-//     // this.people_fully_vaccinated=cs.people_fully_vaccinated,
-//     // this.daily_vaccinations_raw=cs.daily_vaccinations_raw,
-//     // this.daily_vaccinations=cs.daily_vaccinations
-//     console.log("jhgfdsdfghuji",this.data);
+        
+    }
+    this.data=re;
+    // console.log("re",re);
+for(let k=0;k<re.length;k++)
+{
+  var dt=re[k].location;
+  
+}
     
-//     this.selectedCountryData=this.data[country]
-//     console.log(this.selectedCountryData);
+      lines.forEach(cols=>{
+        this.columndata=cols.split(/,(?=\S)/);
+        // console.log("colssssssss",this.columndata);
+this.finaldata.push(cols);
+
+      this.countries.push(this.columndata[0]);
+      
+      // this.rendatacon.push(this.columndata[0])
+      // this.rendatadates.push(this.columndata[1])
+      // console.log("dates",this.rendatadates);
+     
+
+
+      })
+      
+this.finalcountries=this.removeduplicate(this.countries);
+this.finalcountries.shift();
+
+this.updateValues("India");
+      
+    })
     
-//     }
-//   })
+}
+removeduplicate(data:string[])
+{
+  return data.filter((value,index)=>data.indexOf(value)===index);
+}
+updateValues(country : string)
+{
+  this.dates=[];
+  this.total_vaccinations=[];
+  this.daily_vaccinations=[];
+  this.daily_vaccinations_raw=[];
+  this.people_vaccinated=[];
+  this.people_fully_vaccinated=[];
+  console.log("areee reee",this.data);
+  for(let k=0;k<this.data.length;k++)
+  {
+    if(country==this.data[k].location)
+    {
+    // FOR DATES
+      this.dates.push(this.data[k].date);
+  
+      //TOTAL VACCINATION
+      if(this.data[k].total_vaccinations)
+      {
+        this.total_vaccinations.push(this.data[k].total_vaccinations);
+      }
+      else{
+        this.total_vaccinations.push("-");
+      }
+      //pEOPLE VACCINATED
+      if(this.data[k].people_vaccinated)
+      {
+        this.people_vaccinated.push(this.data[k].people_vaccinated);
+      }
+      else{
+        this.people_vaccinated.push("-");
+      }
+      //PEOPLE FULLY VACCINATED
+      if(this.data[k].people_fully_vaccinated)
+      {
+        this.people_fully_vaccinated.push(this.data[k].people_fully_vaccinated);
+      }
+      else{
+        this.people_fully_vaccinated.push("-");
+      }
+      //DAILY VACCINATIONS RAW
+      if(this.data[k].daily_vaccinations_raw)
+      {
+        this.daily_vaccinations_raw.push(this.data[k].daily_vaccinations_raw);
+      }
+      else{
+        this.daily_vaccinations_raw.push("-");
+      }
+      //Daily vaccination
+    if(this.data[k].daily_vaccinations)
+    {
+      this.daily_vaccinations.push(this.data[k].daily_vaccinations);
+    }
+    else{
+      this.daily_vaccinations.push("-");
+    }
+    }
+    
+  }
+  this.updateChart(this.dates,this.total_vaccinations);
+
+  console.log("location",country);
+  console.log("dates",this.dates);
+  console.log("ppl",this.total_vaccinations);
+  
+  
+  
  
-// // console.log(this.selectedCountryData);
-// //  this.loading = false;
+}
+updateChart(dates,total_vaccinations)
+{
+this.datatable=[]
+// this.datatable.push(['dates','total_vaccinations'])
+this.datatable.push([total_vaccinations,dates])
+console.log("dattattataftfdgdff",this.datatable);
 
 }
 
